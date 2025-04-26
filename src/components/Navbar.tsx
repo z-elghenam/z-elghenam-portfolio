@@ -1,13 +1,6 @@
-/**
- * @copyright 2024 de-horst
- * @licence Apache-2.0
- */
-
-/**
- * NODE MODULES
- */
 import { useEffect, useRef } from "react";
 
+// NavItem:  the structure of each navigation link.
 interface NavItem {
   label: string;
   link: string;
@@ -15,6 +8,7 @@ interface NavItem {
   ref?: React.RefObject<HTMLAnchorElement>;
 }
 
+// NavbarProps: Specifies that the component accepts a navOpen boolean prop.
 interface NavbarProps {
   navOpen: boolean;
 }
@@ -34,8 +28,8 @@ const Navbar = ({ navOpen }: NavbarProps) => {
   };
 
   useEffect(() => {
-    initActiveBox();
-    window.addEventListener("resize", initActiveBox);
+    initActiveBox(); // Position the box on first render
+    window.addEventListener("resize", initActiveBox); // Adjust on window resize
 
     return () => {
       window.removeEventListener("resize", initActiveBox);
@@ -43,11 +37,17 @@ const Navbar = ({ navOpen }: NavbarProps) => {
   }, []);
 
   const activeCurrentLink = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    const target = event.target as HTMLAnchorElement;
+    const target = event.target as HTMLAnchorElement; // The clicked link
+
+    // Remove 'active' class from the previous link
     lastActiveLink.current?.classList.remove("active");
+
+    // Add 'active' class to the new link
     target.classList.add("active");
+    // Update ref to the new active link
     lastActiveLink.current = target;
 
+    // Move the activeBox to the new link
     if (activeBox.current) {
       activeBox.current.style.top = target.offsetTop + "px";
       activeBox.current.style.left = target.offsetLeft + "px";
@@ -91,6 +91,7 @@ const Navbar = ({ navOpen }: NavbarProps) => {
         <a
           href={link}
           key={key}
+          // Only "Home" gets the ref initially
           ref={ref}
           className={className}
           onClick={activeCurrentLink}
@@ -99,6 +100,7 @@ const Navbar = ({ navOpen }: NavbarProps) => {
         </a>
       ))}
 
+      {/* The floating highlight */}
       <div className="active-box" ref={activeBox}></div>
     </nav>
   );
