@@ -37,14 +37,16 @@ const Navbar = ({ navOpen }: NavbarProps) => {
   }, []);
 
   const activeCurrentLink = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    const target = event.target as HTMLAnchorElement; // The clicked link
+    // The clicked link
+    const target = event.target as HTMLAnchorElement;
 
     // Remove 'active' class from the previous link
     lastActiveLink.current?.classList.remove("active");
 
     // Add 'active' class to the new link
     target.classList.add("active");
-    // Update ref to the new active link
+
+    // Update ref to the new active link ??
     lastActiveLink.current = target;
 
     // Move the activeBox to the new link
@@ -81,7 +83,7 @@ const Navbar = ({ navOpen }: NavbarProps) => {
     {
       label: "Contact",
       link: "#contact",
-      className: "nav-link md:hidden",
+      className: "nav-link md:!hidden",
     },
   ];
 
